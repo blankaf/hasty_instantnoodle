@@ -285,6 +285,14 @@ static inline int cpuidle_register_governor(struct cpuidle_governor *gov)
 	__ret ? -1 : idx;						\
 })
 
+#ifdef CONFIG_SMP
+void cpuidle_set_idle_cpu(unsigned int cpu);
+void cpuidle_clear_idle_cpu(unsigned int cpu);
+#else
+static inline void cpuidle_set_idle_cpu(unsigned int cpu) { }
+static inline void cpuidle_clear_idle_cpu(unsigned int cpu) { }
+#endif
+
 #define CPU_PM_CPU_IDLE_ENTER(low_level_idle_enter, idx)	\
 	__CPU_PM_CPU_IDLE_ENTER(low_level_idle_enter, idx, 0)
 
